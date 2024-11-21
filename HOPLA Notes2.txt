@@ -1,0 +1,52 @@
+vars:
+{w_name}, {issue}, {client}, {date}, {desc}
+Date: September 20, 2024
+
+Title: {w_name} - {issue}
+
+Desc:
+Name: {w_name} ({client})
+Date: {date}
+
+{desc}
+
+def title(w_name, issue) -> str:
+	output = f"{w_name} - {issue}"
+	return output
+
+def desc(w_name, client, date, desc) -> str:
+	output = f```Name: {w_name} ({client})
+Date: {date}
+
+{desc}```
+
+if "__name__" == "__main__":
+
+
+
+
+
+
+ISSUES:
+Integrity Issue
+Moonlighting
+No screenshots
+Other
+Out-of-Office
+RED FLAG
+Unproductive Behavior
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

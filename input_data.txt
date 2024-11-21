@@ -1,0 +1,4 @@
+	11/21/2024	Auditor	11/8/2024	Staff Audited	Client Company	Shift	Audit Frequency	Integrity Issue	Only one device (mouse/KB) is active with little to no changes in screen activity	High	75%	11:10 am - 11:40 am | 2:50 pm - 3:30 pm	1:10:00	"Only one device (mouse) is active with little to no changes in screen activity
+Timestamp: 11:10 am - 11:40 am | 2:50 pm - 3:30 pm
+Duration: 1 hour and 10 minutes
+All apps and urls show no unproductivity"	No Screenshots (RED)	24-081-B	Lynne	Coach of Staff	Job Position	Team Name	6/5/2024		November	45	2024	Reporting

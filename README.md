@@ -1,4 +1,4 @@
-#Trello Card Description Generator
+# Trello Card Description Generator
 This is a simple command-line application meant to help interns with their SS Audit callouts. It generates the Trello card description of a row from the SS Audit sheet, removing risks of human-error in copying and saving time.
 
 ## Requirements

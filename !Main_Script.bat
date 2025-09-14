@@ -1,6 +1,7 @@
 @echo off
+title Trello Description Automation
 
-echo setting up virtual environment, this may take a upto 3 minutes...
+echo Setting up virtual environment, this may take a upto 3 minutes...
 
 :: Step 1: Run 'venv' to create a virtual environment in the same folder
 python -m venv ve

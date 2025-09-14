@@ -1,7 +1,9 @@
 from prompt_toolkit import prompt
 from prompt_toolkit.completion import WordCompleter
+from prompt_toolkit import print_formatted_text, HTML
 from pyclip import copy
 from datetime import datetime
+from json import dumps
 
 # Function to extract data from input_text.txt
 def extract_variables(input:str, w_name, issue, client, date, desc) -> dict:
@@ -46,20 +48,8 @@ def mk_desc(data_list:dict) -> str:
 command_list = ['extract', 'show', 'desc', 'title']
 command_completer = WordCompleter(command_list, ignore_case=True, match_middle=False)
 def command_prompt(completer):
-	result = prompt('\n\nEnter command (Press tab to complete and toggle through choices):  ', completer=completer)
+	result = prompt('\n\nEnter command (Press tab to complete and toggle through choices): ', completer=completer)
 	return result
-
-# command_completer = WordCompleter(command_list, ignore_case=True, match_middle=True)
-# print('\nPlease enter the characters in the chapter cover.\nNOTE: Press <tab> to use auto-complete function.')
-# cover_char = prompt('Cover character: ', completer=character_completer)
-# while True:
-# 	if cover_char == '':
-# 		cover_char = prompt('Invalid response. Cover character: ', completer=character_completer)
-# 	elif cover_char.lower() != 'done':
-# 		input_cover_chars.append(cover_char)
-# 		cover_char = prompt('Cover character: ', completer=character_completer)
-# 	else:
-# 		break
 
 def main():
 	input_load = ""
@@ -73,7 +63,8 @@ def main():
 	with open('input_data.txt', 'r') as infile:
 		input_load = infile.read()
 	
-	print('''Commands:
+	print('Please copy a row from the Mockup Google Sheet to the "input_text.txt" window and save it.\n'
+	    + '''Commands:
 	   extract => extract data from "input_data.txt". Must be done before other commands are available.
 	   show => show the extracted data from the extract command in JSON string format.
 	   title => creates a title from the extracted data and copies it to your clipboard.
@@ -92,35 +83,36 @@ def main():
 				with open('input_data.txt', 'r') as infile:
 					input_load = infile.read()
 				data_list = extract_variables(input_load, w_name, issue, client, date, desc)
+				print_formatted_text(HTML('<lime>Data extracted!</lime>'))
 			except Exception as e: # Catches any other unexpected exceptions
 				print(f"An error has occurred, please ensure input-text.txt has valid data.\nError encountered: {e}")
 		
 		elif main_command == 'show':
 			if data_list:
-				print(data_list) 
+				print_formatted_text(HTML('<lightslategray>' + dumps(data_list, indent=4) + '</lightslategray>')) 
 			else: 
-				print("Please extract data first!")
+				print_formatted_text(HTML("<red>Please extract data first!</red>"))
 		
 		elif main_command == 'title':
 			if data_list:
 				out_title = mk_title(data_list)
 				copy(out_title)
-				print('TITLE:', out_title)
-				print('Copied to your clipboard!')
+				print_formatted_text(HTML('<white>TITLE:</white><lightslategray>' + out_title + '</lightslategray>'))
+				print_formatted_text(HTML('<lime>Copied to your clipboard!</lime>'))
 			else:
-				print("Please extract data first!")
+				print_formatted_text(HTML("<red>Please extract data first!</red>"))
 		
 		elif main_command == 'desc':
 			if data_list:
 				out_desc = mk_desc(data_list)
 				copy(out_desc)
-				print('DESC:', out_desc)
-				print('Copied to your clipboard!')
+				print_formatted_text(HTML('<white>DESC:</white><lightslategray>' + out_desc + '</lightslategray>'))
+				print_formatted_text(HTML('<lime>Copied to your clipboard!</lime>'))
 			else:
-				print("Please extract data first!")
+				print_formatted_text(HTML("<red>Please extract data first!</red>"))
 		
 		else:
-			print('Command not recognized.')
+			print_formatted_text(HTML('<red>Command not recognized.</red>'))
 
 if __name__ == "__main__":
 	main()

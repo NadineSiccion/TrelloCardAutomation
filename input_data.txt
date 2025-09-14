@@ -1,3 +1,3 @@
-	1/14/2025	Nadine	1/8/2025	Employee Name	Client Name	Morning Shift	Weekly	Unproductive Behavior	Very low activity % for 2 hours or more	Average	38%	10:00 am - 10:40 am | 11:10 am - 12:30 pm | 3:30 pm - 4:00 pm	2:30:00	"Very low activity % for 2 hours or more
-Timestamp: 10:00 am - 10:40 am | 11:10 am - 12:30 pm | 3:30 pm - 4:00 pm
-Duration: 2 hours and 30 minutes"		24-099-B	Lynne	Toti	HR & Training Administrator	HR Team	8/5/2024		January	2	2025	Reporting
+	3/31/2025	Nadine	3/28/2025	John Alec Sante	Xplifi	Night shift	Once Every 2 Weeks	Unproductive Behavior	Very low activity % for 2 hours or more	Average	34%	9:20 pm - 9:50 pm | 12:40 am - 1:10 am | 1:40 am - 2:40 am | 4:40 am - 5:30 am	2:50:00	"Very low activity % for 2 hours or more
+Timestamp 9:20 pm - 9:50 pm | 12:40 am - 1:10 am | 1:40 am - 2:40 am | 4:40 am - 5:30 am
+Duration: 2 hours and 50 minutes"		24-097-B	Shella	Gerri	Database Specialist	Marketing and Sales	8/5/2024		March	13	2025	Reporting

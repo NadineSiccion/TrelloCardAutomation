@@ -3,12 +3,7 @@ from prompt_toolkit.completion import WordCompleter
 from pyclip import copy
 from datetime import datetime
 
-# TODO: convert dates
-
-# Variables
-issue = ''
-
-def extract_variables(input:str, w_name, issue, client, date, desc):
+def extract_variables(input:str, w_name, issue, client, date, desc) -> dict:
 	dict_var = {}
 
 	data = input.split('\t')
@@ -47,12 +42,12 @@ def mk_desc(data_list:dict) -> str:
 
 	
 # Auto-complete feature
-month_list = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
-month_completer = WordCompleter(month_list, ignore_case=True, match_middle=False)
-def date_prompt(completer):
-	result = prompt('Input date (use tab to auto-complete the month): ', completer=completer)
-	return result
-# for date input
+# month_list = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+# month_completer = WordCompleter(month_list, ignore_case=True, match_middle=False)
+# def date_prompt(completer):
+# 	result = prompt('Input date (use tab to auto-complete the month): ', completer=completer)
+# 	return result
+# # for date input
 
 # character_completer = WordCompleter(characters, ignore_case=True, match_middle=True)
 #     print('\nPlease enter the characters in the chapter cover.\nNOTE: Press <tab> to use auto-complete function.')
@@ -78,29 +73,44 @@ def main():
 	with open('input_data.txt', 'r') as infile:
 		input_load = infile.read()
 	
+	print('''Commands:
+	   extract => extract data from "input_data.txt".
+	   show => show the extracted data from the extract command in JSON string format.
+	   title => creates a title from the extracted data and copies it to your clipboard.
+	   desc => creates a description from the extracted data and copies it to your clipboard.
+	   ''')
+	
 	while True:
-		command = input("Enter command (show, extract, title, or desc): ")
-		command = command.strip().split(' ')
+		command = input("\nEnter command (extract, show, title, or desc): ")
+		command = command.lower().strip().split(' ')
 		main_command = command[0]
-		# parameter = ' '.join(command[1:])
-		# print(parameter)
-		if main_command == 'title':
-			out_title = mk_title(data_list)
-			copy(out_title)
-			print('TITLE:', out_title)
-			print('Copied to your clipboard.')
-		elif main_command == 'extract':
-			with open('input_data.txt', 'r') as infile:
-				input_load = infile.read()
-			
-			data_list = extract_variables(input_load, w_name, issue, client, date, desc)
-		elif main_command == 'desc':
-			out_desc = mk_desc(data_list)
-			copy(out_desc)
-			print('DESC:', out_desc)
-			print('Copied to your clipboard.')
+
+		# MAIN LOGIC
+		if main_command == 'extract':
+			try:
+				with open('input_data.txt', 'r') as infile:
+					input_load = infile.read()
+				data_list = extract_variables(input_load, w_name, issue, client, date, desc)
+			except Exception as e: # Catches any other unexpected exceptions
+				print(f"An error has occurred, please ensure input-text.txt has valid data.\nError encountered: {e}")
+		
 		elif main_command == 'show':
-			print(data_list)
+			print(data_list) if data_list else print("Please extract data first")
+		
+		elif main_command == 'title':
+			if data_list:
+				out_title = mk_title(data_list)
+				copy(out_title)
+				print('TITLE:', out_title)
+				print('Copied to your clipboard!')
+		
+		elif main_command == 'desc':
+			if data_list:
+				out_desc = mk_desc(data_list)
+				copy(out_desc)
+				print('DESC:', out_desc)
+				print('Copied to your clipboard!')
+		
 		else:
 			print('Command not recognized.')
 

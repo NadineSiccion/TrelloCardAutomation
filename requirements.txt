@@ -1,4 +1,4 @@
 prompt_toolkit==3.0.48
 pyclip==0.7.0
-pywin32==306
+pywin32==307
 wcwidth==0.2.13

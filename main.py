@@ -3,6 +3,7 @@ from prompt_toolkit.completion import WordCompleter
 from pyclip import copy
 from datetime import datetime
 
+# Function to extract data from input_text.txt
 def extract_variables(input:str, w_name, issue, client, date, desc) -> dict:
 	dict_var = {}
 
@@ -42,24 +43,23 @@ def mk_desc(data_list:dict) -> str:
 
 	
 # Auto-complete feature
-# month_list = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
-# month_completer = WordCompleter(month_list, ignore_case=True, match_middle=False)
-# def date_prompt(completer):
-# 	result = prompt('Input date (use tab to auto-complete the month): ', completer=completer)
-# 	return result
-# # for date input
+command_list = ['extract', 'show', 'desc', 'title']
+command_completer = WordCompleter(command_list, ignore_case=True, match_middle=False)
+def command_prompt(completer):
+	result = prompt('\n\nEnter command (Press tab to complete and toggle through choices):  ', completer=completer)
+	return result
 
-# character_completer = WordCompleter(characters, ignore_case=True, match_middle=True)
-#     print('\nPlease enter the characters in the chapter cover.\nNOTE: Press <tab> to use auto-complete function.')
-#     cover_char = prompt('Cover character: ', completer=character_completer)
-#     while True:
-#         if cover_char == '':
-#             cover_char = prompt('Invalid response. Cover character: ', completer=character_completer)
-#         elif cover_char.lower() != 'done':
-#             input_cover_chars.append(cover_char)
-#             cover_char = prompt('Cover character: ', completer=character_completer)
-#         else:
-#             break
+# command_completer = WordCompleter(command_list, ignore_case=True, match_middle=True)
+# print('\nPlease enter the characters in the chapter cover.\nNOTE: Press <tab> to use auto-complete function.')
+# cover_char = prompt('Cover character: ', completer=character_completer)
+# while True:
+# 	if cover_char == '':
+# 		cover_char = prompt('Invalid response. Cover character: ', completer=character_completer)
+# 	elif cover_char.lower() != 'done':
+# 		input_cover_chars.append(cover_char)
+# 		cover_char = prompt('Cover character: ', completer=character_completer)
+# 	else:
+# 		break
 
 def main():
 	input_load = ""
@@ -74,14 +74,15 @@ def main():
 		input_load = infile.read()
 	
 	print('''Commands:
-	   extract => extract data from "input_data.txt".
+	   extract => extract data from "input_data.txt". Must be done before other commands are available.
 	   show => show the extracted data from the extract command in JSON string format.
 	   title => creates a title from the extracted data and copies it to your clipboard.
-	   desc => creates a description from the extracted data and copies it to your clipboard.
-	   ''')
+	   desc => creates a description from the extracted data and copies it to your clipboard.''')
+	data_list = None
 	
 	while True:
-		command = input("\nEnter command (extract, show, title, or desc): ")
+		command = command_prompt(completer=command_completer)
+		# command = input("\nEnter command (extract, show, title, or desc): ")
 		command = command.lower().strip().split(' ')
 		main_command = command[0]
 
@@ -95,7 +96,10 @@ def main():
 				print(f"An error has occurred, please ensure input-text.txt has valid data.\nError encountered: {e}")
 		
 		elif main_command == 'show':
-			print(data_list) if data_list else print("Please extract data first")
+			if data_list:
+				print(data_list) 
+			else: 
+				print("Please extract data first!")
 		
 		elif main_command == 'title':
 			if data_list:
@@ -103,6 +107,8 @@ def main():
 				copy(out_title)
 				print('TITLE:', out_title)
 				print('Copied to your clipboard!')
+			else:
+				print("Please extract data first!")
 		
 		elif main_command == 'desc':
 			if data_list:
@@ -110,6 +116,8 @@ def main():
 				copy(out_desc)
 				print('DESC:', out_desc)
 				print('Copied to your clipboard!')
+			else:
+				print("Please extract data first!")
 		
 		else:
 			print('Command not recognized.')

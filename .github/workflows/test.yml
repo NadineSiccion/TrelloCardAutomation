@@ -18,7 +18,9 @@ jobs:
               uses: actions/checkout@v4
 
             - name: Run file output
-              run: actions-test-out.sh
+              run: |
+                  chmod +x ./actions-test-out.sh
+                  ./actions-test-out.sh
 
             - name: Commit and push changes
               run: |
